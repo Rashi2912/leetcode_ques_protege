@@ -1,20 +1,351 @@
-Two-sum (easy)
+Two-sum 
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+    
+         vector<int> ans;
+    for(int i=0;i<nums.size()-1;i++){
+    for(int j = i+1;j<nums.size();j++){
+          if(nums[i]+nums[j]==target){
+               ans.push_back(i);
+                    ans.push_back(j);
+                    break;
+          }
+                
+            }
+        }
+        
+        return ans;
+    }
+
+};
 
 
+Number-of-good-pairs 			    
+class Solution {
+public:
+    int numIdenticalPairs(vector<int>& nums) {
+       int count=0;
+        for(int i=0; i<nums.size();i++){
+            for(int j=i+1; j<nums.size();j++){
+                if(nums[i]==nums[j]){
+                   count++;
+                }
+            }
+            
+        }
+        return count;
+    }
 
-Number-of-good-pairs 			    (easy)
+};
 
-Intersection-of-two-arrays 			    (easy)
-Remove-element 				    (easy)
-Remove-duplicates-from-sorted-array 	    (easy)
-Container-with-most-water     	           medium
-Container-with-most-water   medium
+Intersection-of-two-arrays 		
+lass Solution {
+public:
+    vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {
+        int n = nums1.size();
+        int m = nums2.size();
+        vector<int> temp;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (nums1[i] == nums2[j]) {
+                    // Check if the element has already been added to the output vector
+                    bool alreadyAdded = false;
+                    for (int k = 0; k < temp.size(); k++) {
+                        if (temp[k] == nums1[i]) {
+                            alreadyAdded = true;
+                            break;
+                        }
+                    }
+                    if (!alreadyAdded) {
+                        temp.push_back(nums1[i]);
+                    }
+                    break;
+                }
+            }
+        }
+        return temp;
+    }
+};
+
+Remove-element 				   
+class Solution {
+public:
+    int removeElement(vector<int>& nums, int val) {
+       int n=nums.size();
+        int i=0;
+        for(int j=i;j<n;j++){
+       
+        if(nums[j]!=val){
+           nums[i]=nums[j];
+           i++;
+        }
+
+        }
+        return i;
+    
+    }
+};
+
+Remove-duplicates-from-sorted-array 	    
+class Solution {
+public:
+    int removeDuplicates(vector<int>& nums) {
+       
+        int n=nums.size();
+        int i=0;
+        for(int j=1; j<n;j++){
+           
+                if(nums[i]!=nums[j]){
+                  i++;
+                  nums[i]=nums[j];
+                }
+            
+            
+        }
+        return i+1;
+    }
+
+};
+Container-with-most-water
+
+
 4sum			                  	   medium
-Median-of-two-sorted-arrays                  difficult
-Roman-to-integer 				   easy
-Longest-common-prefix 		            easy
-Integer-to-roman 				   medium
-Longest-palindromic-substring 		   medium
-Regular-expression-matching 		   difficult
-Substring-with-concatenation-of-all-words difficult
 
+Median-of-two-sorted-arrays              
+class Solution {
+public:
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+        int n=nums1.size();
+        int m=nums2.size();
+        double arr[n+m];
+
+        int i=0, j=0, k=0;
+        while(i<n && j<m ){
+    if(nums1[i]<nums2[j]){
+         arr[k]=nums1[i];
+            k++;
+            i++;
+
+    }
+    else{
+         arr[k]=nums2[j];
+            k++;
+            j++;
+    }
+    }
+    while(i<n){
+        arr[k++]=nums1[i++];
+    }
+    while(j<m){
+        arr[k++]=nums2[j++];
+    }
+
+    int p=n+m;
+    if(p%2==0){
+        return (arr[p/2]+arr[(p/2)-1])/2.0;
+
+    }
+    else{
+        return arr[p/2];
+    }
+
+    }
+};
+Roman-to-integer 				 
+class Solution {
+public:
+    int romanToInt(string s) {
+        int ans=0;
+        for(int i=0; s[i]!='\0';i++){
+            if(s[i]=='I'){
+            if(s[i+1]=='V'|| s[i+1]=='X'){
+                ans=ans-1;
+            }
+            else{
+                ans+=1;
+            }
+           
+            }
+            else if(s[i]=='V'){
+                ans+=5;
+            }
+            if(s[i]=='X'){
+            if(s[i+1]=='L'|| s[i+1]=='C'){
+                ans=ans-10;
+            }
+            else{
+                ans+=10;
+            }
+            }
+            else if(s[i]=='L'){
+                ans+=50;
+            }
+            if(s[i]=='C'){
+            if(s[i+1]=='D'|| s[i+1]=='M'){
+                ans=ans-100;
+            }
+            else{
+                ans+=100;
+            }
+            }
+            else if(s[i]=='D'){
+                ans+=500;
+            }
+            else if(s[i]=='M'){
+                ans+=1000;
+            }
+            
+
+        }
+        return ans;
+    }
+};
+Longest-common-prefix 		         
+
+Integer-to-roman 				 
+class Solution {
+public:
+    string intToRoman(int num) {
+        // Initialize the Roman numeral symbols
+        string symbols[] = {"M","CM","D","CD","C","XC","L","XL","X","IX","V","IV","I"};
+        int values[] = {1000,900,500,400,100,90,50,40,10,9,5,4,1};
+        
+        string result = "";
+        int i = 0;
+        
+        // Iterate through the values and add the appropriate symbols to the result string
+        while(num > 0){
+            int k = num / values[i];
+            for(int j = 0; j < k; j++){
+                result += symbols[i];
+                num -= values[i];
+            }
+            i++;
+        }
+        
+        return result;
+    }
+};
+
+Longest-palindromic-substring
+class Solution {
+public:
+    string longestPalindrome(string s) {
+        if(s.length()<=1) return s;
+        int max_len=1;
+        int n=s.length();
+        int st=0, end=0;
+
+        for(int i=0;i<n;i++){
+            int l=i, r=i;
+            while(l>=0 && r<n && s[l]==s[r]){
+                l--;
+                r++;
+            }
+            int len=r-l-1;
+            if(len>max_len){
+                max_len=len;
+                st=l+1;
+                end=r-1;
+            }
+        }
+
+        for(int i=0;i<n-1;i++){
+            int l=i, r=i+1;
+            while(l>=0 && r<n && s[l]==s[r]){
+                l--;
+                r++;
+            }
+            int len=r-l-1;
+            if(len>max_len){
+                max_len=len;
+                st=l+1;
+                end=r-1;
+            }
+        }
+
+        return s.substr(st,max_len);
+    }
+};
+
+
+Regular-expression-matching 		  
+class Solution {
+public:
+    bool isMatch(string s, string p) {
+    int s_length = s.length();
+    int p_length = p.length();
+    vector<vector<bool>> dp(s_length+1, vector<bool>(p_length+1, false));
+    dp[0][0] = true;
+    for (int j = 1; j <= p_length; j++) {
+        if (p[j-1] == '*' && dp[0][j-2]) {
+            dp[0][j] = true;
+        }
+    }
+    for (int i = 1; i <= s_length; i++) {
+        for (int j = 1; j <= p_length; j++) {
+            if (s[i-1] == p[j-1] || p[j-1] == '.') {
+                dp[i][j] = dp[i-1][j-1];
+            } else if (p[j-1] == '*') {
+                dp[i][j] = dp[i][j-2];
+                if (s[i-1] == p[j-2] || p[j-2] == '.') {
+                    dp[i][j] = dp[i][j] || dp[i-1][j];
+                }
+            } else {
+                dp[i][j] = false;
+            }
+        }
+    }
+    return dp[s_length][p_length];
+}
+
+};
+
+Substring-with-concatenation-of-all-words 
+class Solution {
+public:
+    vector<int> findSubstring(string s, vector<string>& words) {
+    vector<int> result;
+    if (s.empty() || words.empty()) {
+        return result;
+    }
+    int words_length = words[0].size();
+    int words_count = words.size();
+    int s_length = s.size();
+    unordered_map<string, int> word_freq;
+    for (const auto& word : words) {
+        word_freq[word]++;
+    }
+    for (int i = 0; i < words_length; i++) {
+        int left = i;
+        int count = 0;
+        unordered_map<string, int> current_freq;
+        for (int j = i; j <= s_length - words_length; j += words_length) {
+            string word = s.substr(j, words_length);
+            if (word_freq.count(word)) {
+                current_freq[word]++;
+                count++;
+                while (current_freq[word] > word_freq[word]) {
+                    string left_word = s.substr(left, words_length);
+                    current_freq[left_word]--;
+                    count--;
+                    left += words_length;
+                }
+                if (count == words_count) {
+                    result.push_back(left);
+                    string left_word = s.substr(left, words_length);
+                    current_freq[left_word]--;
+                    count--;
+                    left += words_length;
+                }
+            } else {
+                current_freq.clear();
+                count = 0;
+                left = j + words_length;
+            }
+        }
+    }
+    return result;
+}
+};
