@@ -64,3 +64,82 @@ public:
     
 };
 
+
+Reorder Linked List
+class Solution {
+public:
+void solve(ListNode *head, ListNode *next){
+        if (head->next == NULL || head->next->next == NULL)  return;
+
+     ListNode* end = head;
+        ListNode* prev;
+        while(end->next){
+            prev=end;
+            end=end->next;
+
+        }
+      next=head->next;
+        head->next=end;
+        end->next=next;
+        head=end;
+       prev->next = NULL;
+        solve(head->next, next);
+
+
+ }
+    void reorderList(ListNode* head) {
+        ListNode *end = head;
+        ListNode *next = NULL;
+        solve(end, next);
+
+    
+        
+    }
+};
+
+Remove duplicates
+class Solution {
+public:
+   ListNode* deleteDuplicates(ListNode* head) {
+    if (head == NULL || head->next == NULL) {
+        return head;
+    }
+    ListNode *prev = head;
+    ListNode *cur = head->next;
+    while (cur != NULL) {
+        if (prev->val == cur->val) {
+            prev->next = cur->next;
+            delete cur;
+            cur = prev->next;
+        } else {
+            prev = cur;
+            cur = cur->next;
+        }
+    }
+    return head;
+}
+
+};
+
+Linked List Cycle
+
+class Solution {
+public:
+   bool hasCycle(ListNode *head) {
+    if(!head || !head->next){
+        return false;
+    }
+    ListNode* fast = head;
+    ListNode* slow = head;
+    while(fast && fast->next){
+        slow = slow->next;
+        fast = fast->next->next;
+        if(slow == fast){
+            return true;
+        }
+    }
+    return false;
+}
+
+    
+};
