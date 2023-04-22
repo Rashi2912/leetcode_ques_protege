@@ -95,11 +95,119 @@ public:
 
 
 number-of-students-unable-to-eat-lunch 
-
+class Solution {
+public:
+    int countStudents(vector<int>& students, vector<int>& sandwiches) {
+   int student_count = students.size(), circular_stu=0, square_stu=0;
+	for(int i=0; i<students.size(); i++){
+		if(students[i] == 0){circular_stu++;}
+		else{square_stu++;}
+	}
+	for(int i=0; i<sandwiches.size(); i++){
+		if(sandwiches[i] == 0){
+			if(circular_stu > 0){
+				student_count--;  // because he'll take it and leave the line.
+				circular_stu--;    // circular student is also gone.
+			}
+			else{return student_count;}
+		}
+		else{
+			if(square_stu > 0){
+				student_count--;
+				square_stu--;
+			}
+			else{return student_count;}
+		}
+	}
+	return student_count;
+    }
+};
 
 first-unique-number 
+class FirstUnique {
+public:
+   queue <int> q;
+   map <int, int> cnt;
+   FirstUnique(vector<int>& nums) {
+      for (int i : nums) {
+         cnt[i]++;
+      }
+      for (int i : nums) {
+         if (cnt[i] == 1) {
+            q.push(i);
+         }
+      }
+   }
+   int showFirstUnique() {
+      while (!q.empty() && cnt[q.front()] > 1) q.pop();
+         return q.empty() ? -1 : q.front();
+   }
+   void add(int value) {
+      cnt[value]++;
+      if (cnt[value] == 1)
+         q.push(value);
+   }
+};
+
 
 sliding-window-maximum 
-
+class Solution {
+public:
+    vector<int> maxSlidingWindow(vector<int>& nums, int k) {
+        deque<int>d;
+        vector<int>res;
+        for(int i=0;i<nums.size();i++){
+           
+            if(!d.empty() && d.front()==i-k)
+                d.pop_front();
+            
+            while(!d.empty() && nums[d.back()]<nums[i])
+                d.pop_back();
+            
+            d.push_back(i);
+            if(i>=k-1){
+                res.push_back(nums[d.front()]);
+            }
+        }
+        return res;
+    
+        
+    
+    }
+};
 
 Design Circular Queue
+class MyCircularQueue {
+public:
+    MyCircularQueue(int k) {
+        data.resize(k);
+        maxSize = k;
+    }
+    bool enQueue(int val) {
+        if (isFull()) return false;
+        tail = (tail + 1) % maxSize;
+        data[tail] = val;
+        return true;
+    }
+    bool deQueue() {
+        if (isEmpty()) return false;
+        if (head == tail) head = 0, tail = -1;
+        else head = (head + 1) % maxSize;
+        return true;
+    }
+    int Front() {
+        return isEmpty() ? -1 : data[head];
+    }
+    int Rear() {
+        return isEmpty() ? -1 : data[tail];
+    }
+    bool isEmpty() {
+        return tail == -1;
+    }
+    bool isFull() {
+        return !isEmpty() && (tail + 1) % maxSize == head;
+    }
+private:
+    int maxSize, head = 0, tail = -1;
+    vector<int> data;
+};
