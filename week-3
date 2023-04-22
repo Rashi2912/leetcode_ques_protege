@@ -26,6 +26,37 @@ public:
 };
 
 Min Stack
+class MinStack {
+public:
+    stack<int> alldata;
+    stack<int> mindata;
+    
+    MinStack() {
+      
+    }
+    
+    void push(int val) {
+        alldata.push(val);
+        if (mindata.empty() || val <= mindata.top()) {
+            mindata.push(val);
+        }
+    }
+    
+    void pop() {
+        if (alldata.top() == mindata.top()) {
+            mindata.pop();
+        }
+        alldata.pop();
+    }
+    
+    int top() {
+        return alldata.top();
+    }
+    
+    int getMin() {
+        return mindata.top();
+    }
+};
 
 
 Palindrome Linked List
