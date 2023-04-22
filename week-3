@@ -57,3 +57,125 @@ public:
        
     }
 };
+
+implement-queue-using-stacks
+class MyQueue {
+    public:
+ stack<int> s1;
+    stack<int> s2;
+    // MyQueue() {
+
+    // }
+    
+    void push(int x) {
+        while(!s1.empty()){
+            s2.push(s1.top());
+            s1.pop();
+        }
+        s1.push(x);       
+        while(!s2.empty()){
+            s1.push(s2.top());
+            s2.pop();
+        }
+    }
+    
+    int pop() {
+        int a = s1.top();
+        s1.pop();
+        return a; 
+    }
+    
+    int peek() {
+        return s1.top();
+    }
+    
+    bool empty() {
+        return s1.empty();
+    }
+};
+
+Remove duplicates
+class Solution {
+public:
+    string removeDuplicateLetters(string s) {
+         // Stores the frequency of characters
+    int cnt[26] = { 0 };
+ 
+    // Mark visited characters
+    int vis[26] = { 0 };
+ 
+    int n = s.size();
+ 
+    // Stores count of each character
+    for (int i = 0; i < n; i++)
+        cnt[s[i] - 'a']++;
+ 
+    // Stores the resultant string
+    string res = "";
+ 
+    for (int i = 0; i < n; i++) {
+ 
+        // Decrease the count of
+        // current character
+        cnt[s[i] - 'a']--;
+ 
+        // If character is not already
+        // in answer
+        if (!vis[s[i] - 'a']) {
+ 
+            // Last character > S[i]
+            // and its count > 0
+            while (res.size() > 0
+                   && res.back() > s[i]
+                   && cnt[res.back() - 'a'] > 0) {
+ 
+                // Mark letter unvisited
+                vis[res.back() - 'a'] = 0;
+                res.pop_back();
+            }
+ 
+            // Add s[i] in res and
+            // mark it visited
+            res += s[i];
+            vis[s[i] - 'a'] = 1;
+        }
+    }
+ 
+    // Return the resultant string
+    return res;
+}
+    
+};
+
+maximum-frequency-stack 
+class FreqStack {
+public:
+  unordered_map<int,int>freq;
+    map<int,stack<int>>mp;
+
+    int maxfreq;
+
+    FreqStack() 
+    {
+        maxfreq=0;
+    }
+    
+    void push(int val) 
+    {
+        freq[val]++;
+        maxfreq=max(maxfreq,freq[val]);
+        mp[freq[val]].push(val);
+    }
+    
+    int pop() 
+    {
+        int tp=mp[maxfreq].top();
+        mp[maxfreq].pop();
+        freq[tp]--;
+
+        if(!mp[maxfreq].size())
+          maxfreq--;
+
+        return tp;
+    }
+};
